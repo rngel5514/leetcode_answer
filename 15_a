@@ -1,0 +1,48 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums_pos = {}
+        nums_pos_list =  []
+        nums_neg = {}
+        nums_neg_list = []
+        nums_zero = []
+        results = []
+        """
+        算法思路:
+        第一遍处理成dict_pos和dict_neg
+        "2":2(1,2)
+        对每一个dict如果等于2则组合的时候包含自身
+        如果不，则不含自身
+        """
+        
+        for tmp in nums:
+            if(tmp > 0):
+                if tmp in nums_pos:
+                    nums_pos[tmp] =  nums_pos[tmp] + 1
+                else:
+                    nums_pos_list.append(tmp)
+                    nums_pos[tmp] = 1
+            elif(tmp < 0):
+                if tmp in nums_neg:
+                    nums_neg[tmp] =  nums_neg[tmp] + 1
+                else:
+                    nums_neg_list.append(tmp)
+                    nums_neg[tmp] = 1
+            else:
+                nums_zero.append(tmp)
+        def twoGetOne(list_tmp,dict_tmp,dict_tmp_oppo,results):
+            for i in range(len(list_tmp)):
+                if dict_tmp[list_tmp[i]] >= 2:
+                    if 0-2*list_tmp[i] in dict_tmp_oppo:
+                        results.append([list_tmp[i],list_tmp[i],0-2*list_tmp[i]])
+                for tmp in list_tmp[i+1:]:
+                    if (0-list_tmp[i]-tmp) in dict_tmp_oppo:
+                        results.append([list_tmp[i],tmp,(0-list_tmp[i]-tmp)])
+        twoGetOne(nums_pos_list,nums_pos,nums_neg,results)
+        twoGetOne(nums_neg_list,nums_neg,nums_pos,results)
+        if(len(nums_zero) > 0 ):
+            for tmp in set(nums_pos):
+                if (0-tmp) in nums_neg:
+                    results.append([tmp,0,(0-tmp)])
+        if(len(nums_zero) >= 3):
+            results.append([0,0,0])
+        return results
