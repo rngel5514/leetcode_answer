@@ -1,0 +1,46 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+'''
+21. Merge Two Sorted Lists
+Merge two sorted linked lists and return it as a new list.
+The new list should be made by splicing together the nodes of the first two lists.
+'''
+class Solution(object):
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        head_l1 = l1
+        head_l2 = l2
+        head = None
+        if head_l1 == None and head_l2 != None:
+            return head_l2
+        if head_l1 != None and head_l2 == None:
+            return head_l1
+        if head_l1 == None and head_l2 == None:
+            return None
+        if (head_l1.val <= head_l2.val):
+            head = head_l1
+            head_l1 = head_l1.next
+        else:
+            head = head_l2
+            head_l2 =  head_l2.next
+        po = head
+        while(head_l1 != None and head_l2 != None):
+            if (head_l1.val <= head_l2.val):
+                po.next = head_l1
+                head_l1 = head_l1.next
+            else:
+                po.next = head_l2
+                head_l2 =  head_l2.next
+            po = po.next
+        if(head_l1 != None):
+            po.next = head_l1
+        elif(head_l2 != None):
+            po.next = head_l2
+        return head
