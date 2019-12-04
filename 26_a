@@ -1,0 +1,27 @@
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        """
+        Given a sorted array nums, remove the duplicates
+        in-place such that each element appear only once
+        and return the new length.
+
+        Do not allocate extra space for another array, you must 
+        do this by modifying the input array in-place with O(1) 
+        extra memory.
+        """
+        if(len(nums)<1):
+            return 0
+        pre = nums[0]
+        i = 0
+        for tmp in nums[1:]:
+            if(tmp != pre):
+                pre = tmp
+                i = i + 1
+                nums[i] = tmp 
+        return i+1
+            
+        
