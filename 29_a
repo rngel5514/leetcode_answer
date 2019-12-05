@@ -1,0 +1,43 @@
+class Solution(object):
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+        """
+        Given two integers dividend and divisor, 
+        divide two integers without using 
+        multiplication,division and mod operator.
+        Return the quotient after dividing 
+        dividend by divisor.
+        The integer division should 
+        truncate toward zero.
+        """
+        lp = 0
+        rp = 2147483649
+        i = 0
+        rev = False
+        if(dividend < -2147483647 and divisor == -1):
+            dividend = -2147483647
+        if(dividend <0 and divisor >=0):
+            rev = True
+            dividend = 0 - dividend
+        elif(dividend >= 0 and divisor < 0):
+            rev = True
+            divisor = 0 - divisor
+        elif(dividend <0 and divisor < 0):
+            dividend = 0 -  dividend 
+            divisor = 0 - divisor
+        while(1):
+            if(i*divisor<dividend and (i+1)*divisor<=dividend):
+                lp = i
+                i = (lp + rp) / 2
+            if(i*divisor<=dividend and (i+1)*divisor>dividend):
+                if rev:
+                    return 0 - i
+                return i
+            if(i*divisor>dividend):
+                rp = i
+                i = (lp + rp) / 2
+            
