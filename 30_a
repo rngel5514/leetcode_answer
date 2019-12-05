@@ -1,0 +1,28 @@
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        """
+        You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+        """
+        results = []
+        def parm(lt,rts,n,results):    
+            if(n <= 0):
+                results.append(rts)
+            n -= 1
+            for i in range(len(lt)):
+                rt = rts.copy()
+                rt.append(lt[i])
+                tmp = lt.copy()
+                del(tmp[i])
+                #words[i] 和tmp组合
+                parm(tmp.copy(),rt.copy(),n,results)
+        parm(words,results.copy(),len(words),results)
+        result = []
+        for str_tmp in results:
+            str_tmp = ''.join(str_tmp)
+            tmp = 0
+            while(tmp<len(s)-1 or tmp != -1):
+                tmp = s.find(str_tmp,tmp)
+                if tmp != -1:
+                    result.append(tmp)
+                    tmp += 1
+        return set(result)
