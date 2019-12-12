@@ -1,0 +1,34 @@
+class Solution(object):
+    def countAndSay(self, n):
+        """
+        The count-and-say sequence is the sequence 
+        of integers with the first five terms as following:
+        1 is read off as "one 1" or 11.
+        11 is read off as "two 1s" or 21.
+        21 is read off as "one 2, then one 1" or 1211.
+        """
+        """
+        :type n: int
+        :rtype: str
+        """
+        if n == 1:
+            return '1'
+        results=''
+        a = self.countAndSay(n-1)
+        tmp_pre = None
+        for tmp in a:
+            if (tmp_pre == None):
+                tmp_pre = tmp
+                count = 1
+                continue
+            else:
+                if(tmp_pre == tmp):
+                    count += 1
+                else:
+                    results += str(count)+str(tmp_pre)
+                    tmp_pre = tmp
+                    count = 1
+        results+=str(count)+str(tmp_pre)
+        return results
+        
+                    
