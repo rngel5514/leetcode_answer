@@ -1,0 +1,37 @@
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        #背包问题 选择当前 不选择当前
+        """
+        Given a set of candidate numbers (candidates)
+        (without duplicates) and a target number (target),
+        find all unique combinations in candidates where 
+        the candidate numbers sums to target.
+
+        The same repeated number may be chosen from 
+        candidates unlimited number of times.
+        
+        All numbers (including target) will be positive
+        integers.
+        The solution set must not contain duplicate 
+        combinations.
+        """
+        results = [] 
+        def select(result_list,sum):
+            #print(result_list)
+            if sum > target:
+                return
+            elif sum == target :
+                result_list.sort()
+                if result_list not in results:
+                    results.append(result_list)
+                return
+            else:
+                for tmp in candidates:
+                    if tmp <=  target - sum: 
+                        lp = result_list.copy()
+                        lp.append(tmp)
+                        select(lp,sum+tmp)
+                return
+        select([],0)
+        print(results)
+        return results
