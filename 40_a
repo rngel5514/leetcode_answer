@@ -1,0 +1,23 @@
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        results = [] 
+        def select(result_list,sum,cds):
+            if sum > target:
+                return
+            elif sum == target :
+                result_list.sort()
+                if result_list not in results:
+                    results.append(result_list)
+                return
+            else:
+                for tmp in cds:
+                    if tmp <=  target - sum:
+                        new_cds = cds.copy()
+                        new_cds.remove(tmp)
+                        lp = result_list.copy()
+                        lp.append(tmp)
+                        select(lp,sum+tmp,new_cds)
+                return
+        select([],0,candidates)
+        print(results)
+        return results
