@@ -1,0 +1,44 @@
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        """
+        Given n non-negative integers representing 
+        an elevation map where the width of each bar
+        is 1, compute how much water it is able to 
+        trap after raining.
+        """
+        stack = [(0,-1)]
+        stack_reverse = [(0,-1)]
+        results = 0
+        lh = len(height)
+        i = 0
+        def stick_rain(begin,h,end,results,reverse=False):
+           # print("begin:"+str(begin))
+           # print("end:"+str(end))
+            if reverse ==  True and h == 0:
+                return results
+            if h == 0:
+                return 0
+            for j in range(begin,end):
+                if h > height[j]:
+                    results += h-height[j]
+            #print(results)
+            return results
+        while(stack[0][1] < lh and i < lh):
+            if (height[i] >= stack[0][0]):
+                #统计注入雨水量
+                results = stick_rain(stack[0][1],stack[0][0],i,results)
+                stack.pop()
+                stack.append((height[i],i))
+            if(i == lh-1 and stack[0][1]+1 < lh):
+                #reverse
+                for j in range(i,stack[0][1]-1,-1):
+                    if height[j] >= stack_reverse[0][0]:
+                        results = stick_rain(j,stack_reverse[0][0],stack_reverse[0][1],results,True)
+                        stack_reverse.pop()
+                        stack_reverse.append((height[j],j))
+            i += 1
+        return results
+            
+                
+                
+                
