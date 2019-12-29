@@ -1,0 +1,17 @@
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        results = []
+        results_filter = []
+        def genDict(gen_result,nums_tmp,results):
+            if nums_tmp == []:
+                results.append(gen_result)
+                return 
+            for tmp in nums_tmp:
+                pass_result = gen_result.copy()
+                pass_result.append(tmp)
+                genDict(pass_result,[gen_tmp for gen_tmp in nums_tmp if gen_tmp != tmp],results)
+        genDict([],nums,results)
+        for tmp in results:
+            if tmp not in results_filter:
+                results_filter.append(tmp)
+        return results_filter
