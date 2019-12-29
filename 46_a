@@ -1,0 +1,17 @@
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        """
+        Given a collection of distinct integers, return all possible permutations.
+        """
+        results = []
+        def genDict(gen_result,nums_tmp,results):
+            if nums_tmp == []:
+                results.append(gen_result)
+                return 
+            for tmp in nums_tmp:
+                pass_result = gen_result.copy()
+                pass_result.append(tmp)
+                genDict(pass_result,[gen_tmp for gen_tmp in nums_tmp if gen_tmp != tmp],results)
+        genDict([],nums,results)
+        return results
+                
