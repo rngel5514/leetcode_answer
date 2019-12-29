@@ -1,0 +1,37 @@
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        """
+        You are given an n x n 2D matrix representing an image.
+
+        Rotate the image by 90 degrees (clockwise).
+
+        Note:
+
+        You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation
+        """
+        # 交换
+        def swap(a,b):
+            tmp = a
+            a = b
+            b = tmp
+        n = len(matrix)
+        if n <= 1:
+            return 
+        m = len(matrix[0])
+        #对角线对称交换
+        #逆时针是主对角线交换
+        for tmp_row in range(n):
+            for tmp_column in range(n-1-tmp_row):
+                tmp = matrix[tmp_row][tmp_column]
+                matrix[tmp_row][tmp_column] = matrix[n-1-tmp_column][n-1-tmp_row]
+                matrix[n-1-tmp_column][n-1-tmp_row] = tmp
+        print(matrix)
+        #行交换
+        for tmp_row in range(int((n+0)/2)):
+            tmp = matrix[tmp_row]
+            matrix[tmp_row] = matrix[n-1-tmp_row]
+            matrix[n-1-tmp_row] = tmp
+        print(matrix)
