@@ -1,0 +1,40 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        results = []
+        results_dict = []
+        results_dict_seq = {}
+        t = 0
+        """
+        Given an array of strings, group anagrams together.
+        """
+        def hash_dict(dict_tmp):
+            dict_str = ""
+            list_tmp = []
+            for key in dict_tmp.keys():
+                list_tmp.append(key)
+            list_tmp.sort()
+            for list_var in list_tmp:
+                dict_str += str(list_var)+str(dict_tmp[list_var])
+                #print(str(key)+"value :"+str(value))
+            return str(hash(dict_str))[:9]
+        for tmp in strs:
+            tmp_dict = {}
+            for tmp_var  in tmp:
+                if tmp_dict.get(tmp_var) == None:
+                    tmp_dict[tmp_var] = 1
+                else:
+                    tmp_dict[tmp_var] += 1
+            if tmp_dict not in results_dict:
+                results_dict.append(tmp_dict)
+                results.append([tmp])
+                #print("hhh")
+                results_dict_seq[hash_dict(tmp_dict)] = t
+                #print(hash_dict(tmp_dict))
+                #print("hhh-end")
+                t += 1
+            else:
+                if results_dict_seq.get(hash_dict(tmp_dict)) != None:
+                    results[results_dict_seq[hash_dict(tmp_dict)]].append(tmp)
+                else:
+                    print("Not Found :"+str(hash_dict(tmp_dict)))
+        return results
