@@ -1,0 +1,37 @@
+class Solution:
+  """
+  Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+  """
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        if matrix == []:
+            return 
+        r = len(matrix[0]) #4
+        c = len(matrix)    #3
+        def spiralMatrix(r,c,matrix_tmp,seq,output_list=[]):
+            print("seq:"+str(seq))
+            if r <= 0 or c <= 0:
+                return output_list
+            else:
+                if r > 0:
+                    for i in range(0,r):
+                        output_list.append(matrix_tmp[seq][seq+i])
+                        print(matrix_tmp[seq][seq+i])
+                if c > 1 :
+                    for i in range(0,c):
+                        if i == 0: 
+                            continue
+                        output_list.append(matrix_tmp[seq+i][r-1+seq])
+                        print(matrix_tmp[seq+i][r-1+seq])
+                if r>1 and c>1:
+                    for i in range(r-1,-1,-1):
+                        if i == r-1:
+                            continue
+                        output_list.append(matrix_tmp[c-1+seq][i+seq])
+                        print(matrix_tmp[c-1+seq][i+seq])
+                    for i in range(c-1,-1,-1):
+                        if i == c-1 or i == 0:
+                            continue
+                        output_list.append(matrix_tmp[i+seq][seq])
+                        print(matrix_tmp[i+seq][seq])
+                return spiralMatrix(r-2,c-2,matrix_tmp,seq+1,output_list)
+        return spiralMatrix(r,c,matrix,0)
