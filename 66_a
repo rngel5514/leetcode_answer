@@ -1,0 +1,23 @@
+"""
+66. Plus One
+Given a non-empty array of digits representing a non-negative integer, plus one to the integer.
+
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contain a single digit.
+
+You may assume the integer does not contain any leading zero, except the number 0 itself.
+"""
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        tmp_digits = digits[::-1]
+        add_flag = True
+        for i in range(len(tmp_digits)):
+            if add_flag == True:
+                if tmp_digits[i] < 9:
+                    tmp_digits[i] += 1
+                    add_flag = False
+                else:
+                    tmp_digits[i] = 0
+        if add_flag == True:
+            tmp_digits.append(1)
+        tmp_digits = tmp_digits[::-1]
+        return tmp_digits
