@@ -1,0 +1,37 @@
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        add_flag = False
+        re = []
+        len_a = len(a)
+        len_b = len(b)
+        if len_a == 0 and len_b == 0:
+            return "0"
+        if len_a >= len_b :
+            lon_tmp = a[::-1]
+            sma_tmp = b[::-1]
+        else:
+            lon_tmp = b[::-1]
+            sma_tmp = a[::-1]
+        len_sma = len(sma_tmp)
+        for i in range(max(len_a,len_b)):
+            lon_var = lon_tmp[i]
+            if i >= len_sma:
+                sma_var = 0
+            else:
+                sma_var = sma_tmp[i]
+            if add_flag:
+                re_var = int(lon_var)+int(sma_var)+1
+            else:
+                re_var = int(lon_var)+int(sma_var)
+            add_flag = False
+            if re_var >= 2:
+                add_flag = True
+                re_var -= 2
+                re.append(str(re_var))
+            else:
+                re.append(str(re_var))
+        if add_flag:
+            re.append("1")
+        re = re[::-1]
+        return "".join(re)
+                
