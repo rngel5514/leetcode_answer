@@ -1,0 +1,56 @@
+"""
+71. Simplify Path
+Given an absolute path for a file (Unix-style), simplify it. Or in other words, convert it to the canonical path.
+
+In a UNIX-style file system, a period . refers to the current directory. Furthermore, a double period .. moves the directory up a level.
+
+Note that the returned canonical path must always begin with a slash /, and there must be only a single slash / between two directory names. 
+
+The last directory name (if it exists) must not end with a trailing /. Also, the canonical path must be the shortest string representing the absolute path.
+"""
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+        home = "/home/"
+        rev_path_list = list(path[::-1])
+        if len(rev_path_list) <= 0 :
+            return ""
+        tmp_len = 0
+        tmp = rev_path_list.pop()
+        while( tmp == '/') :
+            tmp_len += 1
+            if rev_path_list == []:
+                return "/"
+            tmp = rev_path_list.pop()
+        if (tmp_len < 1):
+            print("syntax error!")
+            return ""
+        tmp_flag = 1
+        re = []
+        re_tmp = tmp
+        while ( rev_path_list != [] ):
+            tmp = rev_path_list.pop()
+            if ( tmp == '/' ):
+                if ( re_tmp ):
+                    re.append(re_tmp)
+                    re_tmp = ""
+                continue
+            re_tmp += tmp
+        re.append(re_tmp)
+        re_tmp = []
+        print(re)
+        for tmp in re:
+            if tmp == '.' :
+                continue
+            elif tmp == '..' :
+                if re_tmp != []:
+                    re_tmp.pop()
+                continue
+            re_tmp.append( '/' + tmp )
+        re_tmp = "".join(re_tmp)
+        if len(re_tmp) > 1 and re_tmp[-1] == '/':
+            return re_tmp[:-1]
+        elif re_tmp == "":
+            return "/"
+        else:
+            return re_tmp
+    
