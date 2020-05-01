@@ -1,0 +1,29 @@
+"""
+73. Set Matrix Zeroes
+Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in-place.
+"""
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        #记录所有0的行和列
+        #分别遍历行和列完成更新
+        max_len_i = len(matrix)
+        list_i = []
+        list_j = []
+        if max_len_i <= 0:
+            return [[]]
+        max_len_j = len(matrix[0])
+        if max_len_j <= 0:
+            return [[]]
+        for i in range(max_len_i):
+            for j in range(max_len_j):
+                if matrix[i][j] == 0:
+                    list_i.append(i)
+                    list_j.append(j)
+        for i in range(max_len_i):
+            for j in range(max_len_j):
+                if i in list_i or j in list_j :
+                    matrix[i][j] = 0
+        return matrix
