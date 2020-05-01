@@ -1,0 +1,32 @@
+"""
+74. Search a 2D Matrix
+
+Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+Integers in each row are sorted from left to right.
+
+The first integer of each row is greater than the last integer of the previous row.
+"""
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        mat_l_i = len(matrix)
+        if mat_l_i <= 0:
+            return False
+        mat_l_j = len(matrix[0])
+        if mat_l_j <= 0:
+            return False
+        for i in range(mat_l_i):
+            if matrix[i][0] > target:
+                break
+        if i == 0 :
+            for j in range(mat_l_j):
+                if matrix[i][j] == target:
+                    return True
+            return False
+        for j in range(mat_l_j):
+            if matrix[i-1][j] ==  target:
+                return True
+        for j in range(mat_l_j):
+            if matrix[i][j] ==  target:
+                return True
+        return False
