@@ -1,0 +1,64 @@
+"""
+
+76. Minimum Window Substring
+
+Given a string S and a string T, find the minimum window in S 
+
+which will contain all the characters in T in complexity O(n).
+
+"""
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        search_t = {}
+        for tmp in t:
+            if tmp in search_t.keys():
+                search_t[tmp] += 1
+            else:
+                search_t[tmp] = 1
+        search_s = []
+        for tmp in range(len(s)):
+            if s[tmp] in search_t:
+                search_s.append((s[tmp],tmp))
+        left_pt = right_pt = 0
+        win_size = 0
+        min_win_size = 10000000
+        right_flag = 1
+        tmp_search_t = {}
+        # check_flag = 0
+        # CHECK_FLAG = len(search_t)
+        re = ""
+        def check_search(dict_tmp,dict_t):
+            for tmp in dict_t.keys():
+                if tmp not in dict_tmp or dict_tmp[tmp] < dict_t[tmp]:
+                    return False
+            return True
+        
+        while(True):
+            if right_flag: 
+                if right_pt >= len(search_s): break
+                if search_s[right_pt][0] not in tmp_search_t.keys():
+                    tmp_search_t[search_s[right_pt][0]] = 1
+                else:
+                    tmp_search_t[search_s[right_pt][0]] += 1
+                if check_search(tmp_search_t,search_t):
+                    right_pt += 1
+                    win_size  = (search_s[right_pt-1][1] - search_s[left_pt][1] + 1)
+                    if min_win_size > win_size :
+                        re = s[search_s[left_pt][1]:search_s[right_pt-1][1]+1]
+                        min_win_size = win_size
+                    right_flag = False
+                else:
+                    right_pt += 1
+            else:
+                tmp_search_t[search_s[left_pt][0]] -= 1
+                if not check_search(tmp_search_t,search_t):
+                    left_pt += 1
+                    right_flag = True
+                else:
+                    left_pt += 1
+                    win_size  = (search_s[right_pt-1][1] - search_s[left_pt][1] + 1)
+                    if min_win_size > win_size :
+                        re = s[search_s[left_pt][1]:search_s[right_pt-1][1]+1]
+                        min_win_size = win_size
+                    
+        return re
