@@ -1,0 +1,15 @@
+"""
+Subsets
+
+Given a set of distinct integers, nums, return all possible subsets (the power set).
+"""
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums_len = len(nums)
+        nth_bit = 1 << nums_len
+        re = []
+        for tmp in range(2**nums_len):
+            bitmask = bin(tmp | nth_bit)[3:]
+            re.append([nums[i] for i in range(nums_len) if bitmask[i] == '1'])
+        
+        return re
