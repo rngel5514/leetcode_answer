@@ -1,0 +1,25 @@
+"""
+86. Partition List
+
+Given a linked list and a value x, 
+
+partition it such that all nodes less than x come before nodes greater than or equal to x.
+
+You should preserve the original relative order of the nodes in each of the two partitions.
+"""
+class Solution:
+    def partition(self, head: ListNode, x: int) -> ListNode:
+        pre = pre_ptr = ListNode(0)
+        re = re_ptr = ListNode(0)
+        while head != None:
+            while head and head.val < x:
+                re_ptr.next = head
+                re_ptr = re_ptr.next
+                head = head.next
+            if head != None:
+                pre_ptr.next = head
+                pre_ptr = pre_ptr.next
+                head = head.next
+        pre_ptr.next = None
+        re_ptr.next = pre.next
+        return re.next
