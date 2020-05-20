@@ -1,0 +1,49 @@
+"""
+85. Maximal Rectangle
+
+Given a 2D binary matrix filled with 0's and 1's, 
+
+find the largest rectangle containing only 1's and return its area.
+"""
+class Solution: 
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        def largestRectangleArea(heights: List[int]) -> int:
+            stack = []
+            re = 0
+            for list_seq in range(len(heights)):
+                if stack == [] or stack[-1][0] <= heights[list_seq]:
+                    stack.append((heights[list_seq],list_seq))
+                    continue
+                #stack[-1] > heights[list_seq]
+                #calculate
+                for i in range(len(stack)-1,-1,-1):
+                    if stack[i][0] <= heights[list_seq]:
+                        break
+                    if i != 0:
+                        re = max(re,stack[i][0] * (list_seq - stack[i-1][1] -1))
+                    else:
+                        re = max(re,stack[i][0] * (list_seq))
+                while stack != [] and stack[-1][0] > heights[list_seq]:
+                    stack.pop()
+                stack.append((heights[list_seq],list_seq))
+            if stack != []:
+                for i in range(len(stack)-1,-1,-1):
+                    if i != 0 :
+                        re = max(re,stack[i][0] * (len(heights) - stack[i-1][1] -1))
+                    else:
+                        re = max(re,stack[i][0] * (len(heights)))
+            return re
+        if matrix == [] or not matrix:
+            return 0
+        col_num = len(matrix)
+        row_num = len(matrix[0])
+        heights = [0 for j in range(row_num)]
+        re = 0
+        for i in range(col_num):
+            for j in range(row_num):
+                #get height
+                heights[j] = (heights[j]+1) if matrix[i][j] != '0' else 0
+            #get maximal
+            re = max(largestRectangleArea(heights),re)
+        return re
+    
